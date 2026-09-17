@@ -21,3 +21,11 @@ function animate() {
   renderer.render(scene,camera);
 }
 animate();
+
+// 1. Crear elemento HTML5 de Video
+const video = document.createElement('video');
+video.src = '/assets/video.mp4';
+video.load();
+video.loop = true;
+video.muted = true; // Requerido por navegator para autoplay
+video.play();
