@@ -47,3 +47,14 @@ camera.add(listener);
 
 // 2. Crear fuente de sonido posicional
 const sound = new THREE.PositionalAudio(listener);
+
+// 3. Cargar el archivo de Audio
+const audioLoader = new THREE.AudioLoader(listener);
+audioLoader.load('/assets/audio.mp3',function(buffer) {
+  sound.setBuffer(buffer);
+  sound.setRefDistance(1); // Distancia donde el volumen es máximo
+  sound.setMaxDistance(10); // Distancia donde el audio deja de escucharse
+  sound.setLopp(true);
+  sound.setVolume(0.8);
+  sound.play();
+})
