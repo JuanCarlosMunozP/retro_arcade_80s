@@ -1,5 +1,24 @@
 import * as THREE from 'three';
 
+const CONFIG = {
+  videoUrl: '/assets/video.mp4',
+  audioUrl: '/assets/audio.mp3',
+  volumen:0.8,
+  sincronizarAudioConVideo:true,
+  audio: {
+    modelo: 'linear',
+    refDistance:1.2,
+    maxDistance:14,
+    rolloff:1,
+    conoInterior:140,
+    conoExterior:280,
+    gananciaExterior:0.3
+  },
+  zumbido: {refDistance:0.9,rolloff:2.4},
+  escalaLuces: 1,
+  bloom: {fuerza:0.05, radio:0.5,umbra:0.25}
+}
+
 // 1. Escena, Cámara y Renderizador
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75,window.innerWidth /
