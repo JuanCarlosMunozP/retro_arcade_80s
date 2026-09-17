@@ -29,3 +29,6 @@ video.load();
 video.loop = true;
 video.muted = true; // Requerido por navegator para autoplay
 video.play();
+
+// 2. Crear VideoTexture en Three.js
+const videoTexture = new THREE.VideoTexture(video);
