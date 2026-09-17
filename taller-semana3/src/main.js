@@ -58,3 +58,6 @@ audioLoader.load('/assets/audio.mp3',function(buffer) {
   sound.setVolume(0.8);
   sound.play();
 })
+
+// 4. Adjuntar el audio a la pantalla 3D
+pantallaMesh.add(sound);
