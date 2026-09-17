@@ -24,7 +24,7 @@ animate();
 
 // 1. Crear elemento HTML5 de Video
 const video = document.createElement('video');
-video.src = '/assets/video.mp4';
+video.src = '/assets/retro_arcade_video.mp4';
 video.load();
 video.loop = true;
 video.muted = true; // Requerido por navegator para autoplay
@@ -50,7 +50,7 @@ const sound = new THREE.PositionalAudio(listener);
 
 // 3. Cargar el archivo de Audio
 const audioLoader = new THREE.AudioLoader(listener);
-audioLoader.load('/assets/audio.mp3',function(buffer) {
+audioLoader.load('/assets/retro_arcade_music.mp3',function(buffer) {
   sound.setBuffer(buffer);
   sound.setRefDistance(1); // Distancia donde el volumen es máximo
   sound.setMaxDistance(10); // Distancia donde el audio deja de escucharse
