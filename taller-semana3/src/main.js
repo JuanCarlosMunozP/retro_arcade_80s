@@ -11,3 +11,12 @@ const renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// 2. Bucle de Animación a 60 FPS
+function animate() {
+  requestAnimationFrame(animate);
+
+  if (meshObjeto) {
+    meshObjeto.rotation.y += 0.01;
+  }
+  renderer.render(scene,camera);
+}
