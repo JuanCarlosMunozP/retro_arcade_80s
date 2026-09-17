@@ -32,3 +32,11 @@ video.play();
 
 // 2. Crear VideoTexture en Three.js
 const videoTexture = new THREE.VideoTexture(video);
+
+// 3. Aplicar a una Malla 3D (Pantalla)
+const geometry = new THREE.PlaneGeometry(4,2.25);
+const material = new THREE.MeshBasicMaterial({map:videoTexture,side:
+  THREE.DoubleSide
+});
+const pantallaMesh = new THREE.Mesh(geometry,material);
+scene.add(pantallaMesh);
