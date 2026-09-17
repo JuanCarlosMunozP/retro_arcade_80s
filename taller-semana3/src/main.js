@@ -40,3 +40,8 @@ const material = new THREE.MeshBasicMaterial({map:videoTexture,side:
 });
 const pantallaMesh = new THREE.Mesh(geometry,material);
 scene.add(pantallaMesh);
+
+// 1. Crear Listener y vincularlo a la cámara
+const listener = new THREE.AudioListener();
+camera.add(listener);
+
