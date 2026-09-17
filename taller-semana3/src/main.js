@@ -45,3 +45,5 @@ scene.add(pantallaMesh);
 const listener = new THREE.AudioListener();
 camera.add(listener);
 
+// 2. Crear fuente de sonido posicional
+const sound = new THREE.PositionalAudio(listener);
