@@ -59,8 +59,6 @@ export function crearAcciones(deps) {
     $('btnTour').setAttribute('aria-pressed', String(estado.touring));
     $('qualityLbl').textContent = estado.calidad === 'auto' ? 'Auto' : estado.calidad === 'high' ? 'Alta' : 'Baja';
     $('fichas').textContent = String(estado.fichas).padStart(2, '0');
-    $('stVideo').textContent = videoApi.videoOk ? 'listo' : (videoApi.video.error ? 'no encontrado' : 'cargando');
-    $('stAudio').textContent = audioApi.audioOk ? 'listo' : 'cargando';
     const vivo = audioApi.audioOk && estado.playing && !estado.muted;
     $('audioPanel').classList.toggle('off', !vivo);
     $('apState').textContent = !audioApi.audioOk ? 'Sin archivo' : estado.muted ? 'Silenciado' : estado.playing ? 'En vivo' : 'En pausa';

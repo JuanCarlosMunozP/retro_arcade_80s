@@ -257,7 +257,7 @@ export function crearTexturas(renderer) {
       g.fillStyle = 'rgba(0,0,0,0.65)'; g.fillRect(16, 84, 288, 76);
       g.textAlign = 'center'; g.textBaseline = 'middle';
       g.font = '16px ' + PIXEL; g.fillStyle = Math.floor(t * 2) % 2 ? '#ffd400' : '#ff2bd6'; g.fillText('SIN SEÑAL', 160, 108);
-      g.font = '7px ' + PIXEL; g.fillStyle = '#00f0ff'; g.fillText('FALTA public/assets/video.mp4', 160, 138);
+      g.font = '7px ' + PIXEL; g.fillStyle = '#00f0ff'; g.fillText('FALTA public/assets/retro_arcade_video.mp4', 160, 138);
       tex.needsUpdate = true;
     }
     return { tex, dibujar };

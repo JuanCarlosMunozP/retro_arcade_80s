@@ -3,7 +3,7 @@ import { CONFIG } from '../core/config.js';
 
 /** FASE 3: Audio espacial (PositionalAudio) */
 export function crearAudio({ camera, pantallaMesh, anclaZumbido, anclaMonedero, toast, onSync }) {
-  const estado = { audioOk: false };
+  const estado = { audioOk: false, audioError: false };
 
   const listener = new THREE.AudioListener();
   camera.add(listener);
@@ -41,6 +41,7 @@ export function crearAudio({ camera, pantallaMesh, anclaZumbido, anclaMonedero, 
     undefined,
     (err) => {
       console.warn('Error cargando audio:', err);
+      estado.audioError = true;
       toast('No se pudo cargar ' + CONFIG.audioUrl + '. Revisa el nombre y la carpeta public/assets.', 4000);
       onSync();
     }
@@ -124,6 +125,7 @@ export function crearAudio({ camera, pantallaMesh, anclaZumbido, anclaMonedero, 
     setPlayingRef,
     setVideoRef,
     iniciarSonido,
-    get audioOk() { return estado.audioOk; }
+    get audioOk() { return estado.audioOk; },
+    get audioError() { return estado.audioError; }
   };
 }

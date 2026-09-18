@@ -1,7 +1,7 @@
 /* Configuración: rutas, distancias de audio y brillo */
 export const CONFIG = {
-  videoUrl: '/assets/video.mp4',
-  audioUrl: '/assets/audio.mp3',
+  videoUrl: '/assets/retro_arcade_video.mp4',
+  audioUrl: '/assets/retro_arcade_music.mp3',
   volumen: 0.8,
   sincronizarAudioConVideo: true,   // al reanudar, el audio salta al mismo segundo del video
   audio: {
