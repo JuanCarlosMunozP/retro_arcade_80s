@@ -1,13 +1,101 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>taller-semana3</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Taller semana 3: sala arcade con video y audio espacial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="stage" role="application" aria-label="Sala arcade en 3D. Arrastra para mirar, rueda o pellizco para acercar, W A S D para caminar."></div>
+
+  <header class="hud hud-top">
+    <p class="brand">Neon Arcade</p>
+    <div class="stats">
+      <span>Fichas <b id="fichas">00</b></span>
+      <span><b id="fps">--</b> fps</span>
+      <span class="res">Resolución <b id="res">1.5×</b></span>
+    </div>
+    <div class="stats media">
+      <span>video.mp4 <b id="stVideo">cargando</b></span>
+      <span>audio.mp3 <b id="stAudio">cargando</b></span>
+    </div>
+  </header>
+
+  <aside class="hud glass audio-panel off" id="audioPanel" aria-label="Monitor de audio espacial">
+    <div class="ap-head"><h2>Audio espacial</h2><span id="apState">Sin archivo</span></div>
+    <div class="src">
+      <div class="src-row"><span>Pantalla (audio.mp3)</span><b id="scrDist">– m</b></div>
+      <div class="meter"><i id="scrGain"></i></div>
+      <div class="pan" title="Posición izquierda / derecha"><i id="scrPan"></i></div>
+    </div>
+    <div class="src">
+      <div class="src-row"><span>Zumbido del letrero</span><b id="humDist">– m</b></div>
+      <div class="meter"><i id="humGain"></i></div>
+      <div class="pan" title="Posición izquierda / derecha"><i id="humPan"></i></div>
+    </div>
+    <p class="ap-hint">Camina detrás de la máquina o acércate al letrero. Con audífonos el paneo se nota mucho más.</p>
+  </aside>
+
+  <nav class="hud glass dock" aria-label="Controles de reproducción y escena">
+    <button class="btn primary" id="btnPlay" aria-pressed="false" title="Reproducir o pausar (Espacio)">
+      <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.2-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg>
+      <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><rect x="6" y="4" width="4.2" height="16" rx="1" fill="currentColor"/><rect x="13.8" y="4" width="4.2" height="16" rx="1" fill="currentColor"/></svg>
+      <span class="lbl">Reproducir</span><kbd>Espacio</kbd>
+    </button>
+    <button class="btn" id="btnMute" aria-pressed="false" title="Silenciar o activar sonido (M)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9h3.5L12 5v14l-4.5-4H4z"/><path class="wave" d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><path class="cross" d="M16 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="display:none"/></svg>
+      <span class="lbl">Sonido</span><kbd>M</kbd>
+    </button>
+    <button class="btn" id="btnCoin" title="Insertar una ficha (C)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8" fill="none"/><path fill="currentColor" d="M12 7.2l1.4 2.9 3.2.4-2.3 2.2.6 3.1L12 14.3l-2.9 1.5.6-3.1-2.3-2.2 3.2-.4z"/></svg>
+      <span class="lbl">Insertar ficha</span><kbd>C</kbd>
+    </button>
+    <button class="btn" id="btnTour" aria-pressed="false" title="Iniciar o detener el recorrido de cámara (T)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="4.5" stroke="currentColor" stroke-width="1.8" fill="none"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/></svg>
+      <span class="lbl">Recorrido</span><kbd>T</kbd>
+    </button>
+    <button class="btn" id="btnQuality" title="Cambiar calidad gráfica (G)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M12 17l4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="lbl" id="qualityLbl">Auto</span><kbd>G</kbd>
+    </button>
+    <button class="btn" id="btnHelp" aria-expanded="false" aria-controls="help" title="Ver controles (H)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.7.3-1 .8-1 1.5v.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="12" cy="16.8" r="1.1" fill="currentColor"/></svg>
+      <span class="lbl">Controles</span><kbd>H</kbd>
+    </button>
+  </nav>
+
+  <section class="hud glass help" id="help" hidden aria-label="Controles">
+    <h2>Controles</h2>
+    <dl>
+      <dt>Arrastrar</dt><dd>Mirar alrededor de la máquina</dd>
+      <dt>Rueda o pellizco</dt><dd>Acercarse o alejarse</dd>
+      <dt>W A S D, flechas</dt><dd>Caminar por la sala</dd>
+      <dt>Q / E</dt><dd>Orbitar a la izquierda o derecha</dd>
+      <dt>Espacio o P</dt><dd>Reproducir o pausar video y sonido</dd>
+      <dt>C</dt><dd>Insertar una ficha</dd>
+      <dt>V</dt><dd>Efecto CRT o material básico</dd>
+      <dt>F</dt><dd>Video recortado o completo</dd>
+      <dt>M, T, G</dt><dd>Silencio, recorrido, calidad</dd>
+      <dt>U</dt><dd>Ocultar la interfaz</dd>
+    </dl>
+    <p>Haz clic en una ficha flotante para echarla por la ranura, en los botones del panel para encenderlos o en la pantalla para pausar.</p>
+  </section>
+
+  <div class="overlay" id="overlay">
+    <div class="card">
+      <h1>Neon<br>Vision</h1>
+      <p class="lead">Una sala arcade a oscuras, una máquina que reproduce tu video y un sonido que cambia según dónde te pares.</p>
+      <button class="btn start" id="btnStart">Insertar ficha</button>
+      <p class="sub">Haz clic en cualquier parte o pulsa <kbd>Espacio</kbd> para iniciar el video y el sonido</p>
+    </div>
+  </div>
+
+  <div class="toast glass" id="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">Esta sala necesita JavaScript para encenderse.</p></noscript>
+
+  <script type="module" src="/main.js"></script>
+</body>
 </html>
