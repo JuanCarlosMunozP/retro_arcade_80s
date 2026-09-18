@@ -1,3 +1,5 @@
-import { comprobarWebGL2 } from "./core/utils";
+import { comprobarWebGL2, createToast } from "./core/utils";
 
 comprobarWebGL2();
+
+const toast = createToast();

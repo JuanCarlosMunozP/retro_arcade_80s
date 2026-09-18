@@ -1,5 +1,16 @@
 import * as THREE from 'three';
 
+export function createToast() {
+    let toastTimer = 0;
+    return function toast(msg, ms=1800) {
+        const el = $('toast');
+        el.textContent = msg;
+        el.classList.add('show');
+        clearTimeOut(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove('show'),ms);
+    }
+}
+
 export function mostrarError(msg) {
     const card = document.querySelector('#overlay .card');
     card.innerHTML = '<h1 class="small">Sin señal </h1><p class="lead"></p>';
