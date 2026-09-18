@@ -8,6 +8,7 @@ import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {CONFIG} from './config.js';
 import { $, reduceMotion, esVertical} from './utils.js';
 
+// FASE 1: Escena, cámara,renderizador, post-procesado y controles 
 export function Escena() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x07020f);
